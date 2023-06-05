@@ -8,19 +8,19 @@ services:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "postgres"
   vote:
-    image: /home/ubuntu/example-voting-app/vote
+    build: /home/ubuntu/example-voting-app/vote
     links:
       -  redis
     ports:
       - 1000:80
   results:
-    image: /home/ubuntu/example-voting-app/result
+    build: /home/ubuntu/example-voting-app/result
     links:
       - db
     ports:
       - 1001:80
   worker:
-    image: /home/ubuntu/example-voting-app/worker
+    build: /home/ubuntu/example-voting-app/worker
     links:
       - redis
       - db
