@@ -1,0 +1,26 @@
+
+version: "2"
+services:
+  redis:
+    image: redis:alpine
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+  vote:
+    build: /home/ubuntu/votes/example-voting-app/vote
+    links:
+      -  redis
+    ports:
+      - 4000:80
+  results:
+    build: /home/ubuntu/votes/example-voting-app/result
+    links:
+      - db
+    ports:
+      - 5000:80
+  worker:
+    build: /home/ubuntu/votes/example-voting-app/worker
+    links:
+      - redis
